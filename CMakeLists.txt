@@ -3,15 +3,13 @@ project(metaleet)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_definitions(${PROBLEM})
 add_compile_options("-ftemplate-depth=10000000")
 
 file(GLOB sources 
     "src/*.cpp"
 )
-foreach(source ${sources})
-    get_filename_component(tmp ${source} NAME)
-    string(REPLACE ".cpp" "" execname ${tmp})
-    add_executable(${execname} ${source})
-endforeach()
+
+add_executable(tests "src/main.cpp" ${sources})
+target_include_directories(tests PRIVATE "include")
