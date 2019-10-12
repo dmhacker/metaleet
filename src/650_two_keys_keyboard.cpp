@@ -1,34 +1,41 @@
-#include <metal.hpp>
 #include <catch.hpp>
+#include <metal.hpp>
 
 template <class n>
-struct solve {
+struct _solve_impl {
     template <class idx, class end>
-    struct subproblem {
-        using value = metal::if_<metal::mod<end, idx>, 
-              typename subproblem<metal::inc<idx>, end>::value, 
-              metal::min<metal::add<typename solve<idx>::value, metal::div<end, idx>>, typename subproblem<metal::inc<idx>, end>::value>>;
+    struct _subproblem_impl {
+        using type = metal::if_<metal::mod<end, idx>,
+            typename _subproblem_impl<metal::inc<idx>, end>::type,
+            metal::min<metal::add<typename _solve_impl<idx>::type, metal::div<end, idx>>, typename _subproblem_impl<metal::inc<idx>, end>::type>>;
     };
 
     template <class end>
-    struct subproblem<end, end> {
-        using value = end;
+    struct _subproblem_impl<end, end> {
+        using type = end;
     };
 
-    using value = typename subproblem<metal::number<2>, n>::value;
+    template <class idx, class end>
+    using subproblem = typename _subproblem_impl<idx, end>::type;
+
+    using type = subproblem<metal::number<2>, n>;
 };
 
 template <>
-struct solve<metal::number<1>> {
-    using value = metal::number<0>;
+struct _solve_impl<metal::number<1>> {
+    using type = metal::number<0>;
 };
 
-TEST_CASE("Test cases for problem #650") {
-    REQUIRE(solve<metal::number<1>>::value() == 0);
-    REQUIRE(solve<metal::number<3>>::value() == 3);
-    REQUIRE(solve<metal::number<8>>::value() == 6);
-    REQUIRE(solve<metal::number<10>>::value() == 7);
-    REQUIRE(solve<metal::number<50>>::value() == 12);
-    REQUIRE(solve<metal::number<71>>::value() == 71);
-    REQUIRE(solve<metal::number<100>>::value() == 14);
+template <class n>
+using solve = typename _solve_impl<n>::type;
+
+TEST_CASE("Test cases for problem #650")
+{
+    REQUIRE(solve<metal::number<1>>() == 0);
+    REQUIRE(solve<metal::number<3>>() == 3);
+    REQUIRE(solve<metal::number<8>>() == 6);
+    REQUIRE(solve<metal::number<10>>() == 7);
+    REQUIRE(solve<metal::number<50>>() == 12);
+    REQUIRE(solve<metal::number<71>>() == 71);
+    REQUIRE(solve<metal::number<100>>() == 14);
 }

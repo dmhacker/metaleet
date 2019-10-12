@@ -8,22 +8,25 @@ template <class left, class right>
 using mid = metal::div<metal::add<left, right>, metal::number<2>>;
 
 template <class n, class left, class right, class terminate>
-struct binary_search {
+struct _binary_search_impl {
     using value = 
         ternary_switch<metal::div<n, mid<left, right>>, mid<left, right>,
-            typename binary_search<n, metal::inc<mid<left, right>>, right, metal::greater<metal::inc<mid<left, right>>, right>>::value,
+            typename _binary_search_impl<n, metal::inc<mid<left, right>>, right, metal::greater<metal::inc<mid<left, right>>, right>>::value,
             mid<left, right>,
-            typename binary_search<n, left, metal::dec<mid<left, right>>, metal::greater<left, metal::dec<mid<left, right>>>>::value>;
+            typename _binary_search_impl<n, left, metal::dec<mid<left, right>>, metal::greater<left, metal::dec<mid<left, right>>>>::value>;
 };
 
 template <class n, class left, class right>
-struct binary_search<n, left, right, metal::true_> {
+struct _binary_search_impl<n, left, right, metal::true_> {
     using value = right;
 };
 
+template <class n, class left, class right, class terminate>
+using binary_search = typename _binary_search_impl<n, left, right, terminate>::value;
+
 template <class n>
 struct solve {
-    using value = typename binary_search<n, metal::number<1>, metal::div<n, metal::number<2>>, metal::false_>::value;
+    using value = binary_search<n, metal::number<1>, metal::div<n, metal::number<2>>, metal::false_>;
 };
 
 template <>
