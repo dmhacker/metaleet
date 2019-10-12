@@ -23,7 +23,7 @@ struct solve<metal::number<1>> {
     using value = metal::number<0>;
 };
 
-TEST_CASE("Leetcode test cases for #650") {
+TEST_CASE("Test cases for problem #650") {
     REQUIRE(solve<metal::number<1>>::value() == 0);
     REQUIRE(solve<metal::number<3>>::value() == 3);
     REQUIRE(solve<metal::number<8>>::value() == 6);

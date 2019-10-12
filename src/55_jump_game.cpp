@@ -22,7 +22,7 @@ struct solve<metal::list<>> {
     using value = metal::false_;
 };
 
-TEST_CASE("Leetcode test cases for #55")
+TEST_CASE("Test cases for problem #55")
 {
     REQUIRE(solve<metal::numbers<2, 3, 1, 1, 4>>::value() == true);
     REQUIRE(solve<metal::numbers<3, 2, 1, 0, 4>>::value() == false);
