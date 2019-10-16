@@ -75,7 +75,6 @@ struct _drain_operations_impl<metal::list<>, nums, tokenpred> {
 
 template <class ops, class nums, class tokenpred>
 using drain_operations = typename _drain_operations_impl<ops, nums, tokenpred>::type;
-/* using drain_operations = metal::list<ops, nums>; */
 
 template <class state, class tokenpred>
 using drain_operations_direct = typename _drain_operations_impl<lfirst<state>, lsecond<state>, tokenpred>::type;
