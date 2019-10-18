@@ -30,14 +30,14 @@ make -j{NPROC}
 It is recommended to set {NPROC} to a value greater than 1 because it allows
 multiple solutions to be built at once. The test cases included in the solutions
 have been designed to not take an obscene amount of time compilation-wise - remember
-that with more larger test cases, the more time the compiler will take to calculate
-solutions.
+that with larger test cases, the more time the compiler will take to calculate
+solutions, depending on the time complexity of the algorithm.
 
 ## Testing
 
 Testing can either be done at compile-time or at run-time or both. metal gives the 
 `IS_SAME` macro as a way of producing compile-time checks to make sure that 
-types match. We choose to use the Catch2 framework to test the value of returned
+types match. The [Catch2](https://github.com/catchorg/Catch2) framework is then used to test the value of returned
 types (specifically integral types) at run-time. As such, every solution contains
 a test case:
 
