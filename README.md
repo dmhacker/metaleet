@@ -2,7 +2,7 @@
 
 Yep, these Leetcode solutions *run in constant time!
 
-<sup><sub>... *but they don't necessarily compile in constant time.</sub></sup>
+<sup>*but they don't necessarily compile in constant time.</sup>
 
 This repository is collection of solutions to common Leetcode problems, but all of
 them have been rewritten as templated metaprograms in C++. For the uninitiated,
