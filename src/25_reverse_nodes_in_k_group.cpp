@@ -2,20 +2,75 @@
 #include <metal.hpp>
 #include <linked_lists.hpp>
 
-using ONE = metal::number<1>;
-
 template <class head, class k>
-struct _solve_impl {
-    using type = head; 
+struct _has_minimum_length_impl {
+    using type = typename _has_minimum_length_impl<llnode_next<head>, metal::dec<k>>::type;
 };
 
 template <class head>
-struct _solve_impl<head, ONE> {
+struct _has_minimum_length_impl<head, metal::number<0>> {
+    using type = metal::true_;
+};
+
+template <class k>
+struct _has_minimum_length_impl<llnode_end, k> {
+    using type = metal::false_;
+};
+
+template <class head, class k>
+using has_minimum_length = typename _has_minimum_length_impl<head, k>::type;
+
+template <class head, class k>
+struct _kth_node_impl {
+    using type = typename _kth_node_impl<llnode_next<head>, metal::dec<k>>::type;
+};
+
+template <class head>
+struct _kth_node_impl<head, metal::number<0>> {
+    using type = head;
+};
+
+template <class k>
+struct _kth_node_impl<llnode_end, k> {
+    using type = llnode_end;
+};
+
+template <class head, class k>
+using kth_node = typename _kth_node_impl<head, k>::type;
+
+template <class accum, class head, class k>
+struct _reverse_to_kth_impl {
+    using type = typename _reverse_to_kth_impl<llnode<llnode_data<head>, accum>, llnode_next<head>, metal::dec<k>>::type;
+};
+
+template <class accum, class head>
+struct _reverse_to_kth_impl<accum, head, metal::number<0>> {
+    using type = accum;
+};
+
+template <class accum, class head, class k>
+using reverse_to_kth = typename _reverse_to_kth_impl<accum, head, k>::type;
+
+template <class head, class k, class minguard>
+struct _solve_impl {
+    using knxt = kth_node<head, k>;
+    using type = reverse_to_kth<
+        typename _solve_impl<knxt, k, has_minimum_length<knxt, k>>::type,
+        head, k>;
+};
+
+template <class head, class minguard>
+struct _solve_impl<head, metal::number<1>, minguard> {
     using type = head;
 };
 
 template <class head, class k>
-using solve = typename _solve_impl<head, k>::type;
+struct _solve_impl<head, k, metal::false_> {
+    using type = head;
+};
+
+template <class head, class k>
+using solve = typename _solve_impl<head, k, has_minimum_length<head, k>>::type;
 
 TEST_CASE("Test cases for problem #25")
 {

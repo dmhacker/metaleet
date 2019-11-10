@@ -13,10 +13,10 @@ struct llnode {
 using llnode_end = metal::false_;
 
 template <class n>
-using next_llnode = typename n::nxt;
+using llnode_next = typename n::nxt;
 
 template <class n>
-using data_llnode = typename n::data;
+using llnode_data = typename n::data;
 
 template <class nums>
 struct _list_to_llist_impl {
@@ -31,10 +31,23 @@ struct _list_to_llist_impl<metal::numbers<>> {
 template <class lst>
 using list_to_llist = typename _list_to_llist_impl<lst>::type;
 
+template <class head, class accum>
+struct _llist_length_impl {
+    using type = typename _llist_length_impl<llnode_next<head>, metal::inc<accum>>::type;
+};
+
+template <class accum>
+struct _llist_length_impl<llnode_end, accum> {
+    using type = accum; 
+};
+
+template <class head>
+using llist_length = _llist_length_impl<head, metal::number<0>>;
+
 template <class head>
 inline void _llist_to_vector(std::vector<int> & accum) {
-    accum.push_back(data_llnode<head>());
-    _llist_to_vector<next_llnode<head>>(accum);
+    accum.push_back(llnode_data<head>());
+    _llist_to_vector<llnode_next<head>>(accum);
 }
 
 template <>

@@ -4,9 +4,9 @@
 template <class head1, class head2>
 struct _solve_impl {
     using type = metal::if_<
-        metal::less<data_llnode<head1>, data_llnode<head2>>, 
-        llnode<data_llnode<head1>, typename _solve_impl<next_llnode<head1>, head2>::type>,
-        llnode<data_llnode<head2>, typename _solve_impl<head1, next_llnode<head2>>::type> 
+        metal::less<llnode_data<head1>, llnode_data<head2>>, 
+        llnode<llnode_data<head1>, typename _solve_impl<llnode_next<head1>, head2>::type>,
+        llnode<llnode_data<head2>, typename _solve_impl<head1, llnode_next<head2>>::type> 
     >;
 };
 
