@@ -2,6 +2,8 @@
 #include <metal.hpp>
 #include <linked_lists.hpp>
 
+// has_minimum_length :: llnode -> number -> bool 
+
 template <class head, class k>
 struct _has_minimum_length_impl {
     using type = typename _has_minimum_length_impl<llnode_next<head>, metal::dec<k>>::type;
@@ -24,6 +26,8 @@ struct _has_minimum_length_impl<llnode_end, k> {
 
 template <class head, class k>
 using has_minimum_length = typename _has_minimum_length_impl<head, k>::type;
+
+// kth_node :: llnode -> number -> llnode 
 
 template <class head, class k>
 struct _kth_node_impl {
@@ -48,6 +52,8 @@ struct _kth_node_impl<llnode_end, k> {
 template <class head, class k>
 using kth_node = typename _kth_node_impl<head, k>::type;
 
+// reverse_to_kth :: llnode -> llnode -> number -> llnode 
+
 template <class accum, class head, class k>
 struct _reverse_to_kth_impl {
     using type = typename _reverse_to_kth_impl<llnode<llnode_data<head>, accum>, llnode_next<head>, metal::dec<k>>::type;
@@ -60,6 +66,8 @@ struct _reverse_to_kth_impl<accum, head, metal::number<0>> {
 
 template <class accum, class head, class k>
 using reverse_to_kth = typename _reverse_to_kth_impl<accum, head, k>::type;
+
+// solve :: llnode -> number -> llnode
 
 template <class head, class k, class guard>
 struct _solve_impl {
@@ -75,6 +83,8 @@ struct _solve_impl<head, k, metal::false_> {
 
 template <class head, class k>
 using solve = typename _solve_impl<head, k, has_minimum_length<head, k>>::type;
+
+// BEGIN TEST CASES
 
 TEST_CASE("Test cases for problem #25")
 {
@@ -93,3 +103,5 @@ TEST_CASE("Test cases for problem #25")
     REQUIRE(llist_to_vector<solve<list_to_llist<metal::numbers<1, 2, 3, 4, 5>>, metal::number<2>>>()
             == llist_to_vector<list_to_llist<metal::numbers<2, 1, 4, 3, 5>>>());
 }
+
+// END TEST CASES

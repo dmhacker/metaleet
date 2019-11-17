@@ -1,6 +1,8 @@
 #include <catch.hpp>
 #include <linked_lists.hpp>
 
+// solve :: llnode -> llnode -> llnode
+
 template <class head1, class head2>
 struct _solve_impl {
     using type = metal::if_<
@@ -28,6 +30,8 @@ struct _solve_impl<llnode_end, head2> {
 template <class head1, class head2>
 using solve = typename _solve_impl<head1, head2>::type;
 
+// BEGIN TEST CASES
+
 TEST_CASE("Test cases for problem #21")
 {
     REQUIRE(llist_to_vector<solve<list_to_llist<metal::numbers<>>, 
@@ -52,3 +56,5 @@ TEST_CASE("Test cases for problem #21")
             list_to_llist<metal::numbers<324, 2134, 4321, 341234>>>>() 
             == llist_to_vector<list_to_llist<metal::numbers<123, 324, 1234, 2134, 4321, 341234, 544985, 4589217>>>());
 }
+
+// END TEST CASES

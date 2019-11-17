@@ -1,23 +1,28 @@
 #include <catch.hpp>
 #include <metal.hpp>
 
+// solve :: list<number> -> bool
+
 template <class seq>
 struct _solve_impl {
+
+    // loop :: number -> number -> number 
+    
     template <class idx, class old_value>
-    struct _for_loop_impl {
-        using type = typename _for_loop_impl<metal::dec<idx>,
+    struct _loop_impl {
+        using type = typename _loop_impl<metal::dec<idx>,
             metal::if_<metal::greater<old_value, metal::add<idx, metal::at<seq, idx>>>, old_value, idx>>::type;
     };
 
     template <class old_value>
-    struct _for_loop_impl<metal::number<-1>, old_value> {
+    struct _loop_impl<metal::number<-1>, old_value> {
         using type = old_value;
     };
 
     template <class idx, class old_value>
-    using for_loop = typename _for_loop_impl<idx, old_value>::type;
+    using loop = typename _loop_impl<idx, old_value>::type;
 
-    using type = metal::not_<for_loop<metal::dec<metal::dec<metal::size<seq>>>, metal::dec<metal::size<seq>>>>;
+    using type = metal::not_<loop<metal::dec<metal::dec<metal::size<seq>>>, metal::dec<metal::size<seq>>>>;
 };
 
 template <>
@@ -27,6 +32,8 @@ struct _solve_impl<metal::list<>> {
 
 template <class seq>
 using solve = typename _solve_impl<seq>::type;
+
+// BEGIN TEST CASES
 
 TEST_CASE("Test cases for problem #55")
 {
@@ -45,3 +52,5 @@ TEST_CASE("Test cases for problem #55")
                 9, 5, 7, 7, 1, 5, 8, 2, 8, 2, 6, 8, 2, 2, 7, 5, 1, 7, 9, 6>>()
         == false);
 }
+
+// END TEST CASES

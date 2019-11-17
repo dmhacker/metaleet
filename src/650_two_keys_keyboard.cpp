@@ -1,8 +1,13 @@
 #include <catch.hpp>
 #include <metal.hpp>
 
+// solve :: number -> number
+
 template <class n>
 struct _solve_impl {
+
+    // subproblem :: number -> number -> number
+
     template <class idx, class end>
     struct _subproblem_impl {
         using type = metal::if_<metal::mod<end, idx>,
@@ -29,6 +34,8 @@ struct _solve_impl<metal::number<1>> {
 template <class n>
 using solve = typename _solve_impl<n>::type;
 
+// BEGIN TEST CASES
+
 TEST_CASE("Test cases for problem #650")
 {
     REQUIRE(solve<metal::number<1>>() == 0);
@@ -39,3 +46,5 @@ TEST_CASE("Test cases for problem #650")
     REQUIRE(solve<metal::number<71>>() == 71);
     REQUIRE(solve<metal::number<100>>() == 14);
 }
+
+// END TEST CASES

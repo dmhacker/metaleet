@@ -1,26 +1,29 @@
 #include <catch.hpp>
 #include <metal.hpp>
 
+// solve :: list<number> -> number
+
 template <class seq>
 struct _solve_impl {
-    using len = metal::size<seq>;
+
+    // loop :: number -> number -> number -> number
 
     template <class idx, class profit, class minimum>
-    struct _for_loop_impl {
+    struct _loop_impl {
         using type = metal::if_<metal::less<metal::at<seq, idx>, minimum>,
-            typename _for_loop_impl<metal::inc<idx>, profit, metal::at<seq, idx>>::type,
-            typename _for_loop_impl<metal::inc<idx>, metal::max<profit, metal::sub<metal::at<seq, idx>, minimum>>, minimum>::type>;
+            typename _loop_impl<metal::inc<idx>, profit, metal::at<seq, idx>>::type,
+            typename _loop_impl<metal::inc<idx>, metal::max<profit, metal::sub<metal::at<seq, idx>, minimum>>, minimum>::type>;
     };
 
     template <class profit, class minidx>
-    struct _for_loop_impl<len, profit, minidx> {
+    struct _loop_impl<metal::size<seq>, profit, minidx> {
         using type = profit;
     };
 
     template <class idx, class profit, class minimum>
-    using for_loop = typename _for_loop_impl<idx, profit, minimum>::type;
+    using loop = typename _loop_impl<idx, profit, minimum>::type;
 
-    using type = for_loop<metal::number<1>, metal::number<0>, metal::at<seq, metal::number<0>>>;
+    using type = loop<metal::number<1>, metal::number<0>, metal::at<seq, metal::number<0>>>;
 };
 
 template <>
@@ -30,6 +33,8 @@ struct _solve_impl<metal::list<>> {
 
 template <class seq>
 using solve = typename _solve_impl<seq>::type;
+
+// BEGIN TEST CASES
 
 TEST_CASE("Test cases for problem #121")
 {
@@ -43,3 +48,5 @@ TEST_CASE("Test cases for problem #121")
                 2980, 577, 2342, 4069, 8341, 4400, 2923, 2730, 2917, 105>>()
         == 9360);
 }
+
+// END TEST CASES

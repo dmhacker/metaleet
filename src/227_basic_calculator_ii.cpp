@@ -149,6 +149,8 @@ using eval = drain_operations_direct<
 template <class seq>
 using solve = lfirst<lsecond<eval<seq>>>;
 
+// BEGIN TEST CASES
+
 TEST_CASE("Test cases for problem #227")
 {
     REQUIRE(solve<string_<'3'>>() == 3);
@@ -161,3 +163,5 @@ TEST_CASE("Test cases for problem #227")
     REQUIRE(solve<string_<'3', '+', '5', '/', '2'>>() == 5);
     REQUIRE(solve<string_<'5', '/', '5', '+', '2'>>() == 3);
 }
+
+// END TEST CASES 
