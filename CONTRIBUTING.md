@@ -47,4 +47,36 @@ from `solve` matches expected output.
 
 ## Code Standards 
 
-
+There are some general guidelines that are recommended but are not necessarily enforced. 
+* Use `using type = ...` to indicate that a templated struct returns a particular type.
+* Hide the `typename _<...> type` syntax used to evaluate return types of templated structs.
+    * For example, say we have 
+    ```cpp
+    template<class num> 
+    _increment_impl { 
+        using type = metal::inc<num>; 
+    }
+    ```
+    * We could use `typename _increment_impl<metal::number<0>>::type` to evaluate this.
+    * However, we prefer creating an alias via `using` and then call that instead:
+    ```
+    template <class num>
+    using increment = typename _increment_impl<num>::type; 
+    ...
+    increment<metal::number<0>>
+    ...
+    ```
+    * This should help make code more readable. 
+* Templated structs should take in C++ types and return C++ types. They should not take in `int` values
+and return `int` values. Everything must be a C++ type. 
+    * If you wish to use numbers, consider using their integral type representations `metal::number<>`.
+    Note that metal's number representation is itself aliased to `std::integral_constant<>`.
+* For any functions (templated structs), add a comment explaining the method's type signature.
+    * The comment should be a Haskell-like type signature declaration: ${NAME} :: ${ARG1} -> ... -> ${ARGI} -> ${RETTYPE}
+    * It will not be immediately obvious to any human reading your code because templates can take in any type
+    and return any type. Ideally, those types should all fit into certain generalized groups of types.
+    * For example, the `increment` function above takes in a `metal::number<...>` type and 
+    returns `metal::number<...>` type.
+    * Therefore, its type declaration would be: increment :: number -> number 
+* Avoid nesting structs whenever possible and shoot for making everything top-level. 
+* Make use of the [metal library](http://brunocodutra.github.io/metal/) and the [linked lists library](https://github.com/dmhacker/metaleet/blob/master/include/linked_lists.hpp) whenever possible.
