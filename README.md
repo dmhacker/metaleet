@@ -49,4 +49,4 @@ TEST_CASE("Test cases for problem #...") {
 
 ## Contributing
 
-A contribution guide will be added later.
+Please see the [CONTRIBUTING guidelines](https://github.com/dmhacker/metaleet/blob/master/CONTRIBUTING.md) document.
