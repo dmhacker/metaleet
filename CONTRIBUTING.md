@@ -53,9 +53,9 @@ There are some general guidelines that are recommended but are not necessarily e
     * For example, say we have 
     ```cpp
     template<class num> 
-    _increment_impl { 
+    struct _increment_impl { 
         using type = metal::inc<num>; 
-    }
+    };
     ```
     * We could use `typename _increment_impl<metal::number<0>>::type` to evaluate this.
     * However, we prefer creating an alias via `using` and then call that instead:
