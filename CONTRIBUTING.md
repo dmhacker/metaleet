@@ -59,7 +59,7 @@ There are some general guidelines that are recommended but are not necessarily e
     ```
     * We could use `typename _increment_impl<metal::number<0>>::type` to evaluate this.
     * However, we prefer creating an alias via `using` and then call that instead:
-    ```
+    ```cpp
     template <class num>
     using increment = typename _increment_impl<num>::type; 
     ...
