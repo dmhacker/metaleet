@@ -28,7 +28,7 @@ from `solve` matches expected output.
 2. Edit the solution and add your changes.
 3. Ensure that the previous/remaining test cases still work for the problem. 
 4. Open a PR so that it can be reviewed before merging to master. 
-5. Inside the PR, add a sufficient description explaining why your changes are warranted 
+5. Inside the PR, add a note explaining why your changes are warranted 
 (e.g speed improvements, etc.)
 
 ## API Addition Process
@@ -36,14 +36,14 @@ from `solve` matches expected output.
 1. Determine what data structures and/or functions are missing from metaleet's API.
 2. Create a file encapsulating your additions in the **include/** directory. It should be header-only.
 3. Open a PR so that it can be reviewed before merging to master.
-4. Inside the PR, add a sufficient description explaining why this is a necessary addition to the API.
+4. Inside the PR, add a note explaining why this is a necessary addition to the API.
 
 ## API Improvement Process
 
 1. Find the API header file in **include/** that you wish to amend.
 2. Edit the file and add your changes.
 3. Open a PR so that it can be reviewed before merging to master.
-4. Inside the PR, add a sufficient description explaining why this is a necessary modification to the API.
+4. Inside the PR, add a note explaining why this is a necessary modification to the API.
 
 ## Code Standards 
 
