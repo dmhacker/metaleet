@@ -5,8 +5,8 @@ Yep, these Leetcode solutions *run in constant time!
 <sup>*but they don't necessarily compile in constant time.</sup>
 
 This repository is collection of solutions to common Leetcode problems, but all of
-them have been rewritten as templated metaprograms in C++. For the uninitiated,
-[templates in C++ are Turing complete](https://en.wikipedia.org/wiki/Template_metaprogramming) and allow the execution of any algorithm 
+them have been rewritten as templated metaprograms in C++.
+[Templates in C++ are Turing complete](https://en.wikipedia.org/wiki/Template_metaprogramming) and allow the execution of any algorithm 
 at compile-time. 
 
 The [metal](https://github.com/brunocodutra/metal) library is used to provide convenient containers like lists, maps, 
