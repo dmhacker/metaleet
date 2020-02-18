@@ -38,11 +38,12 @@ using append_to_row = typename _append_to_row_impl<metal::list<>, rows, ridx, ZE
 template <class seq, class rows, class sidx, class ridx, class down, 
          class done = metal::same<metal::size<seq>, sidx>>
 struct _fill_rows_impl {
-    using type = typename _fill_rows_impl<seq, append_to_row<rows, ridx, metal::at<seq, sidx>>, metal::inc<sidx>, 
+    using type = typename _fill_rows_impl<seq, append_to_row<rows, ridx, metal::at<seq, sidx>>, 
+        metal::inc<sidx>,
           metal::if_<down, metal::inc<ridx>, metal::dec<ridx>>, 
           metal::if_<metal::or_<
-              metal::same<ridx, ZERO>, 
-                metal::same<ridx, metal::dec<metal::size<rows>>>>, 
+              metal::same<metal::if_<down, metal::inc<ridx>, metal::dec<ridx>>, ZERO>, 
+                metal::same<metal::if_<down, metal::inc<ridx>, metal::dec<ridx>>, metal::dec<metal::size<rows>>>>, 
                 metal::not_<down>, down>>::type;
 };
 
@@ -76,15 +77,10 @@ TEST_CASE("Test cases for problem #6")
     REQUIRE(metal::same<solve<string_<>, metal::number<100>>, string_<>>());
     REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<1>>, string_<'A', 'B', 'C', 'D', 'E'>>());
     REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<2>>, string_<'A', 'C', 'E', 'B', 'D'>>());
-    /* REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<3>>, string_<'A', 'E', 'B', 'D', 'C'>>()); */
-    /* REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<4>>, string_<'A', 'B', 'C', 'E', 'D'>>()); */
-    /* REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<5>>, string_<'A', 'B', 'C', 'D', 'E'>>()); */
-    /* REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<6>>, string_<'A', 'B', 'C', 'D', 'E'>>()); */
-    std::cerr << static_cast<char>(metal::at<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<5>>, ZERO>()) << std::endl;
-    std::cerr << static_cast<char>(metal::at<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<5>>, metal::number<1>>()) << std::endl;
-    std::cerr << static_cast<char>(metal::at<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<5>>, metal::number<2>>()) << std::endl;
-    std::cerr << static_cast<char>(metal::at<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<5>>, metal::number<3>>()) << std::endl;
-    // std::cerr << static_cast<char>(metal::at<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<5>>, metal::number<4>>()) << std::endl;
+    REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<3>>, string_<'A', 'E', 'B', 'D', 'C'>>());
+    REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<4>>, string_<'A', 'B', 'C', 'E', 'D'>>());
+    REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<5>>, string_<'A', 'B', 'C', 'D', 'E'>>());
+    REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<6>>, string_<'A', 'B', 'C', 'D', 'E'>>());
 }
 
 // END TEST CASES 
