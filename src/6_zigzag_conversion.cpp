@@ -2,10 +2,14 @@
 #include <metal.hpp>
 #include <iostream>
 
-// string_ is an alias for metal::numbers that only takes in char values. 
 
-template <char... str>
-using string_ = metal::numbers<str...>;
+// Parse number literals as a metal::list<>
+
+template<char... cs>
+constexpr auto operator ""_raw()
+    -> metal::numbers<cs...> {
+    return {};
+}
 
 // Section for easily-reusable constants
 
@@ -74,13 +78,13 @@ using solve = typename _solve_impl<seq, num_rows>::type;
 
 TEST_CASE("Test cases for problem #6")
 {
-    REQUIRE(metal::same<solve<string_<>, metal::number<100>>, string_<>>());
-    REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<1>>, string_<'A', 'B', 'C', 'D', 'E'>>());
-    REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<2>>, string_<'A', 'C', 'E', 'B', 'D'>>());
-    REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<3>>, string_<'A', 'E', 'B', 'D', 'C'>>());
-    REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<4>>, string_<'A', 'B', 'C', 'E', 'D'>>());
-    REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<5>>, string_<'A', 'B', 'C', 'D', 'E'>>());
-    REQUIRE(metal::same<solve<string_<'A', 'B', 'C', 'D', 'E'>, metal::number<6>>, string_<'A', 'B', 'C', 'D', 'E'>>());
+    REQUIRE(metal::same<solve<metal::numbers<>, metal::number<100>>, metal::numbers<>>());
+    REQUIRE(metal::same<solve<decltype(12345_raw), metal::number<1>>, decltype(12345_raw)>());
+    REQUIRE(metal::same<solve<decltype(12345_raw), metal::number<2>>, decltype(13524_raw)>());
+    REQUIRE(metal::same<solve<decltype(12345_raw), metal::number<3>>, decltype(15243_raw)>());
+    REQUIRE(metal::same<solve<decltype(12345_raw), metal::number<4>>, decltype(12354_raw)>());
+    REQUIRE(metal::same<solve<decltype(12345_raw), metal::number<5>>, decltype(12345_raw)>());
+    REQUIRE(metal::same<solve<decltype(12345_raw), metal::number<6>>, decltype(12345_raw)>());
 }
 
 // END TEST CASES 
