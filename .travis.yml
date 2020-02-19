@@ -1,0 +1,9 @@
+sudo: false
+language: cpp
+compiler:
+  - gcc
+  - clang
+script:
+  - cmake -DCMAKE_BUILD_TYPE=Debug .
+  - make tests -j4
+  - ./tests
