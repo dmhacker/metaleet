@@ -48,7 +48,3 @@ TEST_CASE("Test cases for problem #...") {
     REQUIRE(solve<...>() == ...);
 }
 ```
-
-## Contributing
-
-Please see the [CONTRIBUTING guidelines](https://github.com/dmhacker/metaleet/blob/master/CONTRIBUTING.md) document.
