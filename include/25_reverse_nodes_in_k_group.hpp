@@ -1,6 +1,10 @@
-#include <catch.hpp>
+#ifndef METALEET_25_REVERSE_NODES_K_GROUP_HPP
+#define METALEET_25_REVERSE_NODES_K_GROUP_HPP
+
 #include <metal.hpp>
 #include <linked_lists.hpp>
+
+namespace metaleet {
 
 // has_minimum_length :: llnode -> number -> bool 
 
@@ -67,42 +71,24 @@ struct _reverse_to_kth_impl<accum, head, metal::number<0>> {
 template <class accum, class head, class k>
 using reverse_to_kth = typename _reverse_to_kth_impl<accum, head, k>::type;
 
-// solve :: llnode -> number -> llnode
+// solve25 :: llnode -> number -> llnode
 
 template <class head, class k, 
         class guard = has_minimum_length<head, k>>
-struct _solve_impl {
+struct _solve25_impl {
     using type = reverse_to_kth<
-        typename _solve_impl<kth_node<head, k>, k, has_minimum_length<kth_node<head, k>, k>>::type,
+        typename _solve25_impl<kth_node<head, k>, k, has_minimum_length<kth_node<head, k>, k>>::type,
         head, k>;
 };
 
 template <class head, class k>
-struct _solve_impl<head, k, metal::false_> {
+struct _solve25_impl<head, k, metal::false_> {
     using type = head;
 };
 
 template <class head, class k>
-using solve = typename _solve_impl<head, k>::type;
+using solve25 = typename _solve25_impl<head, k>::type;
 
-// BEGIN TEST CASES
-
-TEST_CASE("Test cases for problem #25")
-{
-    REQUIRE(llist_to_vector<solve<list_to_llist<metal::numbers<>>, metal::number<1>>>()
-            == llist_to_vector<list_to_llist<metal::numbers<>>>());
-    REQUIRE(llist_to_vector<solve<list_to_llist<metal::numbers<>>, metal::number<100>>>()
-            == llist_to_vector<list_to_llist<metal::numbers<>>>());
-    REQUIRE(llist_to_vector<solve<list_to_llist<metal::numbers<1, 2, 3, 4>>, metal::number<2>>>()
-            == llist_to_vector<list_to_llist<metal::numbers<2, 1, 4, 3>>>());
-    REQUIRE(llist_to_vector<solve<list_to_llist<metal::numbers<1, 2, 3, 4, 5, 6>>, metal::number<3>>>()
-            == llist_to_vector<list_to_llist<metal::numbers<3, 2, 1, 6, 5, 4>>>());
-    REQUIRE(llist_to_vector<solve<list_to_llist<metal::numbers<1, 2, 3, 4, 5>>, metal::number<3>>>()
-            == llist_to_vector<list_to_llist<metal::numbers<3, 2, 1, 4, 5>>>());
-    REQUIRE(llist_to_vector<solve<list_to_llist<metal::numbers<1, 2, 3, 4, 5, 6>>, metal::number<2>>>()
-            == llist_to_vector<list_to_llist<metal::numbers<2, 1, 4, 3, 6, 5>>>());
-    REQUIRE(llist_to_vector<solve<list_to_llist<metal::numbers<1, 2, 3, 4, 5>>, metal::number<2>>>()
-            == llist_to_vector<list_to_llist<metal::numbers<2, 1, 4, 3, 5>>>());
 }
 
-// END TEST CASES
+#endif

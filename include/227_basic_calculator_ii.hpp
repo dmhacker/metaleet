@@ -1,20 +1,8 @@
-#include <catch.hpp>
 #include <metal.hpp>
 
-// string_ is an alias for metal::numbers that only takes in char values. 
+#include <constants.hpp>
 
-template <char... str>
-using string_ = metal::numbers<str...>;
-
-// Section for easily-reusable constants
-
-using ZERO = metal::number<0>;
-using ONE = metal::number<1>;
-using TWO = metal::number<2>;
-using PLUS = metal::number<'+'>;
-using MINUS = metal::number<'-'>;
-using MULT = metal::number<'*'>;
-using DIV = metal::number<'/'>;
+namespace metaleet {
 
 // lfirst :: list<a> -> a
 
@@ -193,24 +181,9 @@ using eval = drain_operations_direct<
         make_pairs<add_space<seq>>>,
     ZERO>;
 
-// solve :: list<char> -> number
+// solve227 :: list<char> -> number
 
 template <class seq>
-using solve = lfirst<lsecond<eval<seq>>>;
+using solve227 = lfirst<lsecond<eval<seq>>>;
 
-// BEGIN TEST CASES
-
-TEST_CASE("Test cases for problem #227")
-{
-    REQUIRE(solve<string_<'3'>>() == 3);
-    REQUIRE(solve<string_<'0'>>() == 0);
-    REQUIRE(solve<string_<'3', '2', '3'>>() == 323);
-    REQUIRE(solve<string_<'1', '1'>>() == 11);
-    REQUIRE(solve<string_<'1', '+', '1'>>() == 2);
-    REQUIRE(solve<string_<'3', '+', '2', '*', '2'>>() == 7);
-    REQUIRE(solve<string_<'3', '/', '2'>>() == 1);
-    REQUIRE(solve<string_<'3', '+', '5', '/', '2'>>() == 5);
-    REQUIRE(solve<string_<'5', '/', '5', '+', '2'>>() == 3);
 }
-
-// END TEST CASES 

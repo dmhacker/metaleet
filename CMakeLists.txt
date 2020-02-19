@@ -14,6 +14,7 @@ file(GLOB sources
 )
 
 add_executable(tests "src/main.cpp" ${sources})
+target_include_directories(tests PRIVATE "lib")
 target_include_directories(tests PRIVATE "include")
 
 include(CTest)

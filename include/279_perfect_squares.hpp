@@ -1,5 +1,9 @@
-#include <catch.hpp>
+#ifndef METALEET_279_PERFECT_SQUARES_HPP
+#define METALEET_279_PERFECT_SQUARES_HPP
+
 #include <metal.hpp>
+
+namespace metaleet {
 
 // sqr :: number -> number
 
@@ -9,14 +13,14 @@ using sqr = metal::mul<n, n>;
 // solve :: number -> number
 
 template <class n>
-struct _solve_impl {
+struct _solve279_impl {
 
     // loop :: number -> number -> number
     
     template <class res, class idx, class guard = metal::greater<sqr<idx>, n>>
     struct _loop_impl {
         using type = typename _loop_impl<
-            metal::min<res, metal::inc<typename _solve_impl<metal::sub<n, sqr<idx>>>::type>>,
+            metal::min<res, metal::inc<typename _solve279_impl<metal::sub<n, sqr<idx>>>::type>>,
             metal::inc<idx>>::type;
     };
 
@@ -32,31 +36,18 @@ struct _solve_impl {
 };
 
 template <>
-struct _solve_impl<metal::number<1>> {
+struct _solve279_impl<metal::number<1>> {
     using type = metal::number<1>;
 };
 
 template <>
-struct _solve_impl<metal::number<0>> {
+struct _solve279_impl<metal::number<0>> {
     using type = metal::number<0>;
 };
 
 template <class n>
-using solve = typename _solve_impl<n>::type;
+using solve279 = typename _solve279_impl<n>::type;
 
-// BEGIN TEST CASES
-
-TEST_CASE("Test cases for problem #279")
-{
-    REQUIRE(solve<metal::number<7>>() == 4);
-    REQUIRE(solve<metal::number<12>>() == 3);
-    REQUIRE(solve<metal::number<13>>() == 2);
-    REQUIRE(solve<metal::number<71>>() == 4);
-    REQUIRE(solve<metal::number<100>>() == 1);
-    REQUIRE(solve<metal::number<196>>() == 1);
-    REQUIRE(solve<metal::number<263>>() == 4);
-    REQUIRE(solve<metal::number<313>>() == 2);
-    REQUIRE(solve<metal::number<364>>() == 3);
 }
 
-// END TEST CASES
+#endif
