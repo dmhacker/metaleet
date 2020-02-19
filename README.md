@@ -39,9 +39,9 @@ solutions, depending on the time complexity of the algorithm.
 
 Testing can either be done at compile-time or at run-time or both. metal gives the 
 `IS_SAME` macro as a way of producing compile-time checks to make sure that 
-types match. The [Catch2](https://github.com/catchorg/Catch2) framework is then used to test the value of returned
-types (specifically integral types) at run-time. As such, every solution contains
-a test case:
+types match. However, metaleet uses the [Catch2](https://github.com/catchorg/Catch2) framework 
+to test the value of returned types (specifically integral types) at run-time. 
+As such, every solution contains a test case:
 
 ```
 TEST_CASE("Test cases for problem #...") {
