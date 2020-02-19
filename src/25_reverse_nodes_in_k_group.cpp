@@ -69,7 +69,8 @@ using reverse_to_kth = typename _reverse_to_kth_impl<accum, head, k>::type;
 
 // solve :: llnode -> number -> llnode
 
-template <class head, class k, class guard>
+template <class head, class k, 
+        class guard = has_minimum_length<head, k>>
 struct _solve_impl {
     using type = reverse_to_kth<
         typename _solve_impl<kth_node<head, k>, k, has_minimum_length<kth_node<head, k>, k>>::type,
@@ -82,7 +83,7 @@ struct _solve_impl<head, k, metal::false_> {
 };
 
 template <class head, class k>
-using solve = typename _solve_impl<head, k, has_minimum_length<head, k>>::type;
+using solve = typename _solve_impl<head, k>::type;
 
 // BEGIN TEST CASES
 
