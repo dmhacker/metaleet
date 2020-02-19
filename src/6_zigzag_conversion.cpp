@@ -14,35 +14,19 @@ constexpr auto operator ""_raw()
 // Section for easily-reusable constants
 
 using ZERO = metal::number<0>;
+using ONE = metal::number<1>;
 
-// append_to_row :: list<list<char>> -> number -> char -> list<list<char>>
-
-template <class accum, class rows, class ridx, class idx, class val, 
-        class met = metal::same<idx, ridx>,
-         class done = metal::same<idx, metal::size<rows>>>
-struct _append_to_row_impl {
-    using type = typename _append_to_row_impl<metal::append<accum, metal::at<rows, idx>>, rows, ridx, metal::inc<idx>, val>::type;
-};
-
-template <class accum, class rows, class ridx, class idx, class val, class met>
-struct _append_to_row_impl<accum, rows, ridx, idx, val, met, metal::true_> {
-    using type = accum;
-};
-
-template <class accum, class rows, class ridx, class idx, class val, class done>
-struct _append_to_row_impl<accum, rows, ridx, idx, val, metal::true_, done> {
-    using type = typename _append_to_row_impl<metal::append<accum, metal::append<metal::at<rows, idx>, val>>, rows, ridx, metal::inc<idx>, val>::type;
-};
+// append_at :: list<list<X>> -> number -> X -> list<list<X>>
 
 template <class rows, class ridx, class val>
-using append_to_row = typename _append_to_row_impl<metal::list<>, rows, ridx, ZERO, val>::type;
+using append_at = metal::insert<metal::erase<rows, ridx, metal::inc<ridx>>, ridx, metal::append<metal::at<rows, ridx>, val>>;
 
 // fill_rows :: list<char> -> list<list<char>> -> list<list<char>>
 
 template <class seq, class rows, class sidx, class ridx, class down, 
          class done = metal::same<metal::size<seq>, sidx>>
 struct _fill_rows_impl {
-    using type = typename _fill_rows_impl<seq, append_to_row<rows, ridx, metal::at<seq, sidx>>, 
+    using type = typename _fill_rows_impl<seq, append_at<rows, ridx, metal::at<seq, sidx>>, 
         metal::inc<sidx>,
           metal::if_<down, metal::inc<ridx>, metal::dec<ridx>>, 
           metal::if_<metal::or_<
@@ -67,7 +51,7 @@ struct _solve_impl {
 };
 
 template<class seq>
-struct _solve_impl<seq, metal::number<1>> {
+struct _solve_impl<seq, ONE> {
     using type = seq;
 };
 
@@ -85,6 +69,8 @@ TEST_CASE("Test cases for problem #6")
     REQUIRE(metal::same<solve<decltype(12345_raw), metal::number<4>>, decltype(12354_raw)>());
     REQUIRE(metal::same<solve<decltype(12345_raw), metal::number<5>>, decltype(12345_raw)>());
     REQUIRE(metal::same<solve<decltype(12345_raw), metal::number<6>>, decltype(12345_raw)>());
+    REQUIRE(metal::same<solve<decltype(1234567890_raw), metal::number<3>>, decltype(1592468037_raw)>());
+    REQUIRE(metal::same<solve<decltype(1234567890_raw), metal::number<4>>, decltype(1726835940_raw)>());
 }
 
 // END TEST CASES 
