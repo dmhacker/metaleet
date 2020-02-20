@@ -1,6 +1,5 @@
 #include <catch.hpp>
-
-#include <21_merge_two_sorted_lists.hpp>
+#include <solutions/21_merge_two_sorted_lists.hpp>
 
 TEST_CASE("Test cases for problem #21")
 {

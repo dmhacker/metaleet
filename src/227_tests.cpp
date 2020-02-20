@@ -1,6 +1,5 @@
 #include <catch.hpp>
-
-#include <227_basic_calculator_ii.hpp>
+#include <solutions/227_basic_calculator_ii.hpp>
 
 TEST_CASE("Test cases for problem #227")
 {

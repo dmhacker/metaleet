@@ -1,7 +1,7 @@
-#ifndef METALEET_322_COIN_CHANGE_HPP
-#define METALEET_322_COIN_CHANGE_HPP
+#ifndef METALEET_322_SOLUTION_HPP
+#define METALEET_322_SOLUTION_HPP
 
-#include <metal.hpp>
+#include <api/common.hpp>
 
 namespace metaleet {
 
@@ -31,8 +31,8 @@ struct _solve322_impl {
 };
 
 template <class coins, class is_neg_amount>
-struct _solve322_impl<coins, metal::number<0>, is_neg_amount> {
-    using type = metal::number<0>;
+struct _solve322_impl<coins, ZERO, is_neg_amount> {
+    using type = ZERO;
 };
 
 template <class coins, class amount>
@@ -41,7 +41,7 @@ struct _solve322_impl<coins, amount, metal::true_> {
 };
 
 template <class coins, class amount>
-using solve322 = typename _solve322_impl<coins, amount, metal::less<amount, metal::number<0>>>::type;
+using solve322 = typename _solve322_impl<coins, amount, metal::less<amount, ZERO>>::type;
 
 }
 

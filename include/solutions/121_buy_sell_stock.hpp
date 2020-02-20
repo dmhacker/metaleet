@@ -1,7 +1,7 @@
-#ifndef METALEET_121_BUY_SELL_STOCK_HPP
-#define METALEET_121_BUY_SELL_STOCK_HPP
+#ifndef METALEET_121_SOLUTION_HPP
+#define METALEET_121_SOLUTION_HPP
 
-#include <metal.hpp>
+#include <api/common.hpp>
 
 namespace metaleet {
 
@@ -27,12 +27,12 @@ struct _solve121_impl {
     template <class idx, class profit, class minimum>
     using loop = typename _loop_impl<idx, profit, minimum>::type;
 
-    using type = loop<metal::number<1>, metal::number<0>, metal::at<seq, metal::number<0>>>;
+    using type = loop<ONE, ZERO, metal::at<seq, ZERO>>;
 };
 
 template <>
 struct _solve121_impl<metal::list<>> {
-    using type = metal::number<0>;
+    using type = ZERO;
 };
 
 template <class seq>

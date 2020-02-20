@@ -1,5 +1,5 @@
-#ifndef METALEET_CONSTANTS_HPP
-#define METALEET_CONSTANTS_HPP
+#ifndef METALEET_COMMON_HPP
+#define METALEET_COMMON_HPP
 
 #include <metal.hpp>
 

@@ -1,12 +1,12 @@
-#ifndef METALEET_25_REVERSE_NODES_K_GROUP_HPP
-#define METALEET_25_REVERSE_NODES_K_GROUP_HPP
+#ifndef METALEET_25_SOLUTION_HPP
+#define METALEET_25_SOLUTION_HPP
 
-#include <metal.hpp>
-#include <linked_lists.hpp>
+#include <api/common.hpp>
+#include <api/linked_list.hpp>
 
 namespace metaleet {
 
-// has_minimum_length :: llnode -> number -> bool 
+// has_minimum_length :: llnode -> number -> bool
 
 template <class head, class k>
 struct _has_minimum_length_impl {
@@ -14,12 +14,12 @@ struct _has_minimum_length_impl {
 };
 
 template <>
-struct _has_minimum_length_impl<llnode_end, metal::number<0>> {
+struct _has_minimum_length_impl<llnode_end, ZERO> {
     using type = metal::true_;
 };
 
 template <class head>
-struct _has_minimum_length_impl<head, metal::number<0>> {
+struct _has_minimum_length_impl<head, ZERO> {
     using type = metal::true_;
 };
 
@@ -31,7 +31,7 @@ struct _has_minimum_length_impl<llnode_end, k> {
 template <class head, class k>
 using has_minimum_length = typename _has_minimum_length_impl<head, k>::type;
 
-// kth_node :: llnode -> number -> llnode 
+// kth_node :: llnode -> number -> llnode
 
 template <class head, class k>
 struct _kth_node_impl {
@@ -39,12 +39,12 @@ struct _kth_node_impl {
 };
 
 template <>
-struct _kth_node_impl<llnode_end, metal::number<0>> {
+struct _kth_node_impl<llnode_end, ZERO> {
     using type = llnode_end;
 };
 
 template <class head>
-struct _kth_node_impl<head, metal::number<0>> {
+struct _kth_node_impl<head, ZERO> {
     using type = head;
 };
 
@@ -56,7 +56,7 @@ struct _kth_node_impl<llnode_end, k> {
 template <class head, class k>
 using kth_node = typename _kth_node_impl<head, k>::type;
 
-// reverse_to_kth :: llnode -> llnode -> number -> llnode 
+// reverse_to_kth :: llnode -> llnode -> number -> llnode
 
 template <class accum, class head, class k>
 struct _reverse_to_kth_impl {
@@ -64,7 +64,7 @@ struct _reverse_to_kth_impl {
 };
 
 template <class accum, class head>
-struct _reverse_to_kth_impl<accum, head, metal::number<0>> {
+struct _reverse_to_kth_impl<accum, head, ZERO> {
     using type = accum;
 };
 
@@ -73,8 +73,8 @@ using reverse_to_kth = typename _reverse_to_kth_impl<accum, head, k>::type;
 
 // solve25 :: llnode -> number -> llnode
 
-template <class head, class k, 
-        class guard = has_minimum_length<head, k>>
+template <class head, class k,
+    class guard = has_minimum_length<head, k>>
 struct _solve25_impl {
     using type = reverse_to_kth<
         typename _solve25_impl<kth_node<head, k>, k, has_minimum_length<kth_node<head, k>, k>>::type,

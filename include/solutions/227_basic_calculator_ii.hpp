@@ -1,6 +1,7 @@
-#include <metal.hpp>
+#ifndef METALEET_227_SOLUTION_HPP
+#define METALEET_227_SOLUTION_HPP
 
-#include <constants.hpp>
+#include <api/common.hpp>
 
 namespace metaleet {
 
@@ -30,8 +31,8 @@ struct _make_pairs_impl<metal::number<-1>, seq> {
 template <class seq>
 using make_pairs = typename _make_pairs_impl<metal::sub<metal::size<seq>, TWO>, seq>::type;
 
-// As clarification, the 'char' type is simply a number acting as a character. 
-// precedence :: char -> number 
+// As clarification, the 'char' type is simply a number acting as a character.
+// precedence :: char -> number
 
 template <class token>
 using precedence = metal::if_<
@@ -66,21 +67,21 @@ using pop1 = metal::take<stack, metal::dec<metal::size<stack>>>;
 template <class stack>
 using pop2 = pop1<pop1<stack>>;
 
-// geq :: number -> number -> bool 
+// geq :: number -> number -> bool
 
 template <class n1, class n2>
 using geq = metal::not_<metal::less<n1, n2>>;
 
-// drain_operations :: list<char> -> list<number> -> number -> list<list<char>, list<number>> 
+// drain_operations :: list<char> -> list<number> -> number -> list<list<char>, list<number>>
 
 template <class ops, class nums, class tokenpred>
 struct _drain_operations_impl {
     using type = metal::if_<geq<precedence<metal::back<ops>>, tokenpred>,
-                     typename _drain_operations_impl<
-                         pop1<ops>,
-                         metal::append<pop2<nums>, invoke_operation<ops, nums>>,
-                         tokenpred>::type,
-                     metal::list<ops, nums>>;
+        typename _drain_operations_impl<
+            pop1<ops>,
+            metal::append<pop2<nums>, invoke_operation<ops, nums>>,
+            tokenpred>::type,
+        metal::list<ops, nums>>;
 };
 
 template <class nums, class tokenpred>
@@ -91,20 +92,20 @@ struct _drain_operations_impl<metal::list<>, nums, tokenpred> {
 template <class ops, class nums, class tokenpred>
 using drain_operations = typename _drain_operations_impl<ops, nums, tokenpred>::type;
 
-// drain_operations_direct :: list<list<char>, list<number>> -> number -> list<list<char>, list<number>> 
+// drain_operations_direct :: list<list<char>, list<number>> -> number -> list<list<char>, list<number>>
 
 template <class state, class tokenpred>
 using drain_operations_direct = typename _drain_operations_impl<lfirst<state>, lsecond<state>, tokenpred>::type;
 
-// parse_operation :: list<char> -> list<number> -> char -> list<list<char>, list<number>, char> 
+// parse_operation :: list<char> -> list<number> -> char -> list<list<char>, list<number>, char>
 
 template <class ops, class nums, class curr, class token>
 using parse_operation = metal::list<
-    metal::append<lfirst<drain_operations<ops, nums, precedence<token>>>, token>, 
+    metal::append<lfirst<drain_operations<ops, nums, precedence<token>>>, token>,
     lsecond<drain_operations<ops, nums, precedence<token>>>,
     curr>;
 
-// parse_operation_direct :: list<list<char>, list<number>, char> -> list<list<char>, list<number>, char> 
+// parse_operation_direct :: list<list<char>, list<number>, char> -> list<list<char>, list<number>, char>
 
 template <class state, class token>
 using parse_operation_direct = parse_operation<
@@ -187,3 +188,5 @@ template <class seq>
 using solve227 = lfirst<lsecond<eval<seq>>>;
 
 }
+
+#endif

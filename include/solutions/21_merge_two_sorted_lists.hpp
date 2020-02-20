@@ -1,7 +1,7 @@
-#ifndef METALEET_21_MERGE_TWO_SORTED_LISTS_HPP
-#define METALEET_21_MERGE_TWO_SORTED_LISTS_HPP
+#ifndef METALEET_21_SOLUTION_HPP
+#define METALEET_21_SOLUTION_HPP
 
-#include <linked_lists.hpp>
+#include <api/linked_list.hpp>
 
 namespace metaleet {
 

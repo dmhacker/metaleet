@@ -1,6 +1,5 @@
 #include <catch.hpp>
-
-#include <55_jump_game.hpp>
+#include <solutions/55_jump_game.hpp>
 
 TEST_CASE("Test cases for problem #55")
 {

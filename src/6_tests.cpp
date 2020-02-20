@@ -1,6 +1,5 @@
 #include <catch.hpp>
-
-#include <6_zigzag_conversion.hpp>
+#include <solutions/6_zigzag_conversion.hpp>
 
 template<char... cs>
 constexpr auto operator ""_raw()

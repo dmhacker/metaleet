@@ -1,6 +1,5 @@
 #include <catch.hpp>
-
-#include <69_sqrt.hpp>
+#include <solutions/69_sqrt.hpp>
 
 TEST_CASE("Test cases for problem #69")
 {

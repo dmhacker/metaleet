@@ -1,6 +1,5 @@
 #include <catch.hpp>
-
-#include <121_buy_sell_stock.hpp>
+#include <solutions/121_buy_sell_stock.hpp>
 
 TEST_CASE("Test cases for problem #121")
 {

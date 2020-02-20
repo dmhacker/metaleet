@@ -1,9 +1,7 @@
-#ifndef METALEET_69_SQRT_HPP
-#define METALEET_69_SQRT_HPP
+#ifndef METALEET_69_SOLUTION_HPP
+#define METALEET_69_SOLUTION_HPP
 
-#include <metal.hpp>
-
-#include <constants.hpp>
+#include <api/common.hpp>
 
 namespace metaleet {
 
@@ -21,11 +19,10 @@ using mid = metal::div<metal::add<left, right>, TWO>;
 
 template <class n, class left, class right, class guard = metal::greater<left, right>>
 struct _binary_search_impl {
-    using type = 
-        ternary_switch<metal::div<n, mid<left, right>>, mid<left, right>,
-            typename _binary_search_impl<n, metal::inc<mid<left, right>>, right>::type,
-            mid<left, right>,
-            typename _binary_search_impl<n, left, metal::dec<mid<left, right>>>::type>;
+    using type = ternary_switch<metal::div<n, mid<left, right>>, mid<left, right>,
+        typename _binary_search_impl<n, metal::inc<mid<left, right>>, right>::type,
+        mid<left, right>,
+        typename _binary_search_impl<n, left, metal::dec<mid<left, right>>>::type>;
 };
 
 template <class n, class left, class right>

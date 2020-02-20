@@ -1,7 +1,7 @@
-#ifndef METALEET_55_JUMP_GAME_HPP
-#define METALEET_55_JUMP_GAME_HPP
+#ifndef METALEET_55_SOLUTION_HPP
+#define METALEET_55_SOLUTION_HPP
 
-#include <metal.hpp>
+#include <api/linked_list.hpp>
 
 namespace metaleet {
 
@@ -10,8 +10,8 @@ namespace metaleet {
 template <class seq>
 struct _solve55_impl {
 
-    // loop :: number -> number -> number 
-    
+    // loop :: number -> number -> number
+
     template <class idx, class old_value>
     struct _loop_impl {
         using type = typename _loop_impl<metal::dec<idx>,

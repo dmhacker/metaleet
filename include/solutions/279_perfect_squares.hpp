@@ -1,7 +1,7 @@
-#ifndef METALEET_279_PERFECT_SQUARES_HPP
-#define METALEET_279_PERFECT_SQUARES_HPP
+#ifndef METALEET_279_SOLUTION_HPP
+#define METALEET_279_SOLUTION_HPP
 
-#include <metal.hpp>
+#include <api/common.hpp>
 
 namespace metaleet {
 
@@ -16,7 +16,7 @@ template <class n>
 struct _solve279_impl {
 
     // loop :: number -> number -> number
-    
+
     template <class res, class idx, class guard = metal::greater<sqr<idx>, n>>
     struct _loop_impl {
         using type = typename _loop_impl<
@@ -32,17 +32,17 @@ struct _solve279_impl {
     template <class res, class idx>
     using loop = typename _loop_impl<res, idx>::type;
 
-    using type = loop<metal::number<5>, metal::number<1>>;
+    using type = loop<metal::number<5>, ONE>;
 };
 
 template <>
-struct _solve279_impl<metal::number<1>> {
-    using type = metal::number<1>;
+struct _solve279_impl<ONE> {
+    using type = ONE;
 };
 
 template <>
-struct _solve279_impl<metal::number<0>> {
-    using type = metal::number<0>;
+struct _solve279_impl<ZERO> {
+    using type = ZERO;
 };
 
 template <class n>

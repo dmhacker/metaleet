@@ -1,6 +1,7 @@
-#include <metal.hpp>
+#ifndef METALEET_650_SOLUTION_HPP
+#define METALEET_650_SOLUTION_HPP
 
-#include <constants.hpp>
+#include <api/common.hpp>
 
 namespace metaleet {
 
@@ -82,3 +83,5 @@ template <class n>
 using solve650 = typename _solve650_impl<n>::type;
 
 }
+
+#endif

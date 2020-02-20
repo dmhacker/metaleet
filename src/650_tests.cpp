@@ -1,6 +1,5 @@
 #include <catch.hpp>
-
-#include <650_two_keys_keyboard.hpp>
+#include <solutions/650_two_keys_keyboard.hpp>
 
 TEST_CASE("Test cases for problem #650")
 {

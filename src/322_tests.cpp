@@ -1,6 +1,5 @@
 #include <catch.hpp>
-
-#include <322_coin_change.hpp>
+#include <solutions/322_coin_change.hpp>
 
 TEST_CASE("Test cases for problem #322")
 {

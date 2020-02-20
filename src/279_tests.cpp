@@ -1,6 +1,5 @@
 #include <catch.hpp>
-
-#include <279_perfect_squares.hpp>
+#include <solutions/279_perfect_squares.hpp>
 
 TEST_CASE("Test cases for problem #279")
 {

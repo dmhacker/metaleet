@@ -1,6 +1,5 @@
 #include <catch.hpp>
-
-#include <25_reverse_nodes_in_k_group.hpp>
+#include <solutions/25_reverse_nodes_in_k_group.hpp>
 
 TEST_CASE("Test cases for problem #25")
 {
