@@ -1,7 +1,8 @@
 sudo: false
 language: cpp
 compiler:
-  - gcc
+  - gcc-9
+  - clang-9
 script:
   - cmake -DCMAKE_BUILD_TYPE=Debug .
   - make tests -j4
