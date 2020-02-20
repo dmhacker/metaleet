@@ -6,15 +6,17 @@
 
 namespace metaleet {
 
-// solve114 :: bnode -> llnode
+// solve114 :: btnode -> llnode
 
 template <class root, class tail>
 struct _solve114_impl {
-   using type = llnode<bnode_data<root>, typename _solve114_impl<bnode_left<root>, typename _solve114_impl<bnode_right<root>, tail>::type>::type>;
+   using type = llnode<btnode_data<root>, 
+         typename _solve114_impl<btnode_left<root>, 
+         typename _solve114_impl<btnode_right<root>, tail>::type>::type>;
 };
 
 template <class tail>
-struct _solve114_impl<bnode_end, tail> {
+struct _solve114_impl<btnode_end, tail> {
     using type = tail; 
 };
 
