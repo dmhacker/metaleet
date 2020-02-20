@@ -1,5 +1,5 @@
-#ifndef METALEET_LINKED_LISTS_HPP
-#define METALEET_LINKED_LISTS_HPP
+#ifndef METALEET_LINKED_LIST_HPP
+#define METALEET_LINKED_LIST_HPP
 
 #include <metal.hpp>
 #include <vector>
@@ -66,32 +66,6 @@ struct _llist_length_impl<llnode_end, accum> {
 
 template <class head>
 using llist_length = _llist_length_impl<head, metal::number<0>>;
-
-// llist_to_vector is a special templated function that produces
-// a std::vector using the contents of the templated list that
-// is passed into it.
-//
-// It must be called at runtime since a compile-time
-// non-constexpr std::vector does not exist. However,
-// the contents of the vector are written at compile-time.
-
-template <class head>
-inline void _llist_to_vector(std::vector<int>& accum)
-{
-    accum.push_back(llnode_data<head>());
-    _llist_to_vector<llnode_next<head>>(accum);
-}
-
-template <>
-inline void _llist_to_vector<llnode_end>(std::vector<int>& accum) {}
-
-template <class head>
-inline std::vector<int> llist_to_vector()
-{
-    std::vector<int> result;
-    _llist_to_vector<head>(result);
-    return result;
-}
 
 }
 
