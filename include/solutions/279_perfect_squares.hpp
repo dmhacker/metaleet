@@ -5,48 +5,41 @@
 
 namespace metaleet {
 
-// sqr :: number -> number
+namespace detail279 {
+    template <class n>
+    struct solve_impl {
+        // loop :: number -> number -> number
 
-template <class n>
-using sqr = metal::mul<n, n>;
+        template <class res, class idx, class guard = metal::greater<sqr<idx>, n>>
+        struct loop_impl {
+            using type = typename loop_impl<
+                metal::min<res, metal::inc<typename solve_impl<metal::sub<n, sqr<idx>>>::type>>,
+                metal::inc<idx>>::type;
+        };
 
-// solve :: number -> number
+        template <class res, class idx>
+        struct loop_impl<res, idx, metal::true_> {
+            using type = res;
+        };
 
-template <class n>
-struct _solve279_impl {
-
-    // loop :: number -> number -> number
-
-    template <class res, class idx, class guard = metal::greater<sqr<idx>, n>>
-    struct _loop_impl {
-        using type = typename _loop_impl<
-            metal::min<res, metal::inc<typename _solve279_impl<metal::sub<n, sqr<idx>>>::type>>,
-            metal::inc<idx>>::type;
+        using type = typename loop_impl<metal::number<5>, ONE>::type;
     };
 
-    template <class res, class idx>
-    struct _loop_impl<res, idx, metal::true_> {
-        using type = res;
+    template <>
+    struct solve_impl<ONE> {
+        using type = ONE;
     };
 
-    template <class res, class idx>
-    using loop = typename _loop_impl<res, idx>::type;
+    template <>
+    struct solve_impl<ZERO> {
+        using type = ZERO;
+    };
+}
 
-    using type = loop<metal::number<5>, ONE>;
-};
-
-template <>
-struct _solve279_impl<ONE> {
-    using type = ONE;
-};
-
-template <>
-struct _solve279_impl<ZERO> {
-    using type = ZERO;
-};
+// solve279 :: number -> number
 
 template <class n>
-using solve279 = typename _solve279_impl<n>::type;
+using solve279 = typename detail279::solve_impl<n>::type;
 
 }
 

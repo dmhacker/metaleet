@@ -6,22 +6,24 @@
 
 namespace metaleet {
 
-// solve114 :: btnode -> llnode
+namespace detail114 {
+    template <class root, class tail>
+    struct solve_impl {
+        using type = llnode<btnode_data<root>,
+            typename solve_impl<btnode_left<root>,
+                typename solve_impl<btnode_right<root>, tail>::type>::type>;
+    };
 
-template <class root, class tail>
-struct _solve114_impl {
-   using type = llnode<btnode_data<root>, 
-         typename _solve114_impl<btnode_left<root>, 
-         typename _solve114_impl<btnode_right<root>, tail>::type>::type>;
-};
+    template <class tail>
+    struct solve_impl<btnode_end, tail> {
+        using type = tail;
+    };
+}
 
-template <class tail>
-struct _solve114_impl<btnode_end, tail> {
-    using type = tail; 
-};
+// solve114 :: btnode<a> -> llnode<a>
 
 template <class root>
-using solve114 = typename _solve114_impl<root, llnode_end>::type;
+using solve114 = typename detail114::solve_impl<root, llnode_end>::type;
 
 }
 
