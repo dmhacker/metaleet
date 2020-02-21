@@ -35,37 +35,39 @@ using llnode_next = typename n::nxt;
 template <class n>
 using llnode_data = typename n::data;
 
-// list_to_llist :: list<a> -> llnode<a>
+namespace detail {
+    template <class nums>
+    struct _list_to_llnode_impl {
+        using type = llnode<metal::front<nums>, typename _list_to_llnode_impl<metal::drop<nums, metal::number<1>>>::type>;
+    };
+
+    template <>
+    struct _list_to_llnode_impl<metal::numbers<>> {
+        using type = llnode_end;
+    };
+
+    template <class head, class accum>
+    struct _llnode_length_impl {
+        using type = typename _llnode_length_impl<llnode_next<head>, metal::inc<accum>>::type;
+    };
+
+    template <class accum>
+    struct _llnode_length_impl<llnode_end, accum> {
+        using type = accum;
+    };
+}
+
+// list_to_llnode :: list<a> -> llnode<a>
 // Converts a metal::list into a its equivalent linked list representation.
 
-template <class nums>
-struct _list_to_llist_impl {
-    using type = llnode<metal::front<nums>, typename _list_to_llist_impl<metal::drop<nums, metal::number<1>>>::type>;
-};
-
-template <>
-struct _list_to_llist_impl<metal::numbers<>> {
-    using type = llnode_end;
-};
-
 template <class lst>
-using list_to_llist = typename _list_to_llist_impl<lst>::type;
+using list_to_llnode = typename detail::_list_to_llnode_impl<lst>::type;
 
-// llist_length :: llnode<a> -> number
+// llnode_length :: llnode<a> -> number
 // Given a top-level linked list node, returns the number of nodes attached it to it.
 
-template <class head, class accum>
-struct _llist_length_impl {
-    using type = typename _llist_length_impl<llnode_next<head>, metal::inc<accum>>::type;
-};
-
-template <class accum>
-struct _llist_length_impl<llnode_end, accum> {
-    using type = accum;
-};
-
 template <class head>
-using llist_length = _llist_length_impl<head, metal::number<0>>;
+using llnode_length = detail::_llnode_length_impl<head, metal::number<0>>;
 
 }
 
