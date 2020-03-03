@@ -10,8 +10,8 @@ namespace detail6 {
 
     template <class seq, class rows, class sidx, class ridx, class down,
         class done = metal::same<metal::size<seq>, sidx>>
-    struct fill_rows_impl {
-        using type = typename fill_rows_impl<seq, append_at<rows, ridx, metal::at<seq, sidx>>,
+    struct _fill_rows {
+        using type = typename _fill_rows<seq, append_at<rows, ridx, metal::at<seq, sidx>>,
             metal::inc<sidx>,
             metal::if_<down, metal::inc<ridx>, metal::dec<ridx>>,
             metal::if_<metal::or_<
@@ -21,12 +21,12 @@ namespace detail6 {
     };
 
     template <class seq, class rows, class sidx, class ridx, class down>
-    struct fill_rows_impl<seq, rows, sidx, ridx, down, metal::true_> {
+    struct _fill_rows<seq, rows, sidx, ridx, down, metal::true_> {
         using type = rows;
     };
 
     template <class seq, class rows>
-    using fill_rows = typename fill_rows_impl<seq, rows, ZERO, ZERO, metal::true_>::type;
+    using fill_rows = typename _fill_rows<seq, rows, ZERO, ZERO, metal::true_>::type;
 
     template <class seq, class num_rows>
     struct solve_impl {

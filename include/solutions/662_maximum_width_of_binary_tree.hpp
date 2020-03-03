@@ -11,7 +11,7 @@ namespace detail662 {
 
     template <class bounds, class level, class position,
         class guard = metal::has_key<bounds, level>>
-    struct merge_bounds_impl {
+    struct _merge_bounds {
         using type = metal::insert_key<metal::erase_key<bounds, level>, level,
             metal::pair<metal::min<
                             metal::first<metal::at_key<bounds, level>>,
@@ -22,31 +22,31 @@ namespace detail662 {
     };
 
     template <class bounds, class level, class position>
-    struct merge_bounds_impl<bounds, level, position, metal::false_> {
+    struct _merge_bounds<bounds, level, position, metal::false_> {
         using type = metal::insert_key<bounds, level, metal::pair<position, position>>;
     };
 
     template <class bounds, class level, class position>
-    using merge_bounds = typename merge_bounds_impl<bounds, level, position>::type;
+    using merge_bounds = typename _merge_bounds<bounds, level, position>::type;
 
     // get_bounds :: btnode<a> -> map<number, pair<number, number>>
 
     template <class node, class level, class position, class accum>
-    struct get_bounds_impl {
-        using type = typename get_bounds_impl<btnode_right<node>,
+    struct _get_bounds {
+        using type = typename _get_bounds<btnode_right<node>,
             metal::inc<level>, metal::inc<metal::mul<position, TWO>>,
-            typename get_bounds_impl<btnode_left<node>,
+            typename _get_bounds<btnode_left<node>,
                 metal::inc<level>, metal::mul<position, TWO>,
                 merge_bounds<accum, level, position>>::type>::type;
     };
 
     template <class level, class position, class accum>
-    struct get_bounds_impl<btnode_end, level, position, accum> {
+    struct _get_bounds<btnode_end, level, position, accum> {
         using type = accum;
     };
 
     template <class root>
-    using get_bounds = typename get_bounds_impl<root, ZERO, ZERO, metal::map<>>::type;
+    using get_bounds = typename _get_bounds<root, ZERO, ZERO, metal::map<>>::type;
 
     // get_difference :: pair<number, number> -> number
 

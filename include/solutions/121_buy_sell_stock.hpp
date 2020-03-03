@@ -7,27 +7,27 @@ namespace metaleet {
 
 namespace detail121 {
     template <class seq>
-    struct solve_impl {
+    struct _solve {
 
         // loop :: number -> number -> number -> number
 
         template <class idx, class profit, class minimum>
-        struct loop_impl {
+        struct _loop {
             using type = metal::if_<metal::less<metal::at<seq, idx>, minimum>,
-                typename loop_impl<metal::inc<idx>, profit, metal::at<seq, idx>>::type,
-                typename loop_impl<metal::inc<idx>, metal::max<profit, metal::sub<metal::at<seq, idx>, minimum>>, minimum>::type>;
+                typename _loop<metal::inc<idx>, profit, metal::at<seq, idx>>::type,
+                typename _loop<metal::inc<idx>, metal::max<profit, metal::sub<metal::at<seq, idx>, minimum>>, minimum>::type>;
         };
 
         template <class profit, class minidx>
-        struct loop_impl<metal::size<seq>, profit, minidx> {
+        struct _loop<metal::size<seq>, profit, minidx> {
             using type = profit;
         };
 
-        using type = typename loop_impl<ONE, ZERO, metal::at<seq, ZERO>>::type;
+        using type = typename _loop<ONE, ZERO, metal::at<seq, ZERO>>::type;
     };
 
     template <>
-    struct solve_impl<metal::list<>> {
+    struct _solve<metal::list<>> {
         using type = ZERO;
     };
 }
@@ -35,7 +35,7 @@ namespace detail121 {
 // solve121 :: list<number> -> number
 
 template <class seq>
-using solve121 = typename detail121::solve_impl<seq>::type;
+using solve121 = typename detail121::_solve<seq>::type;
 
 }
 

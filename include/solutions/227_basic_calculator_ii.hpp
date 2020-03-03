@@ -9,18 +9,18 @@ namespace detail227 {
     // make_pairs :: list<a> -> list<pair<a, a>>
 
     template <class idx, class seq>
-    struct make_pairs_impl {
-        using type = metal::append<typename make_pairs_impl<metal::dec<idx>, seq>::type,
+    struct _make_pairs {
+        using type = metal::append<typename _make_pairs<metal::dec<idx>, seq>::type,
             metal::pair<metal::at<seq, idx>, metal::at<seq, metal::inc<idx>>>>;
     };
 
     template <class seq>
-    struct make_pairs_impl<metal::number<-1>, seq> {
+    struct _make_pairs<metal::number<-1>, seq> {
         using type = metal::list<>;
     };
 
     template <class seq>
-    using make_pairs = typename make_pairs_impl<metal::sub<metal::size<seq>, TWO>, seq>::type;
+    using make_pairs = typename _make_pairs<metal::sub<metal::size<seq>, TWO>, seq>::type;
 
     // As clarification, the 'char' type is simply a number acting as a character.
     // precedence :: char -> number
@@ -51,9 +51,9 @@ namespace detail227 {
     // drain_operations :: list<char> -> list<number> -> number -> list<list<char>, list<number>>
 
     template <class ops, class nums, class tokenpred>
-    struct drain_operations_impl {
+    struct _drain_operations {
         using type = metal::if_<geq<precedence<metal::back<ops>>, tokenpred>,
-            typename drain_operations_impl<
+            typename _drain_operations<
                 pop1<ops>,
                 metal::append<pop2<nums>, invoke_operation<ops, nums>>,
                 tokenpred>::type,
@@ -61,17 +61,17 @@ namespace detail227 {
     };
 
     template <class nums, class tokenpred>
-    struct drain_operations_impl<metal::list<>, nums, tokenpred> {
+    struct _drain_operations<metal::list<>, nums, tokenpred> {
         using type = metal::list<metal::list<>, nums>;
     };
 
     template <class ops, class nums, class tokenpred>
-    using drain_operations = typename drain_operations_impl<ops, nums, tokenpred>::type;
+    using drain_operations = typename _drain_operations<ops, nums, tokenpred>::type;
 
     // drain_operations_direct :: list<list<char>, list<number>> -> number -> list<list<char>, list<number>>
 
     template <class state, class tokenpred>
-    using drain_operations_direct = typename drain_operations_impl<lfirst<state>, lsecond<state>, tokenpred>::type;
+    using drain_operations_direct = typename _drain_operations<lfirst<state>, lsecond<state>, tokenpred>::type;
 
     // parse_operation :: list<char> -> list<number> -> char -> list<list<char>, list<number>, char>
 
@@ -118,27 +118,27 @@ namespace detail227 {
     // parse_tokenpair :: list<list<char>, list<number>, number> -> pair<char, char> -> list<list<char>, list<number>, number>
 
     template <class state, class token0, class token1, class is_op0>
-    struct parse_tokenpair_impl {
+    struct _parse_tokenpair {
         using type = state;
     };
 
     template <class state, class token1, class is_op0>
-    struct parse_tokenpair_impl<state, metal::number<' '>, token1, is_op0> {
+    struct _parse_tokenpair<state, metal::number<' '>, token1, is_op0> {
         using type = state;
     };
 
     template <class state, class token0, class token1>
-    struct parse_tokenpair_impl<state, token0, token1, metal::true_> {
+    struct _parse_tokenpair<state, token0, token1, metal::true_> {
         using type = parse_operation_direct<state, token0>;
     };
 
     template <class state, class token0, class token1>
-    struct parse_tokenpair_impl<state, token0, token1, metal::false_> {
+    struct _parse_tokenpair<state, token0, token1, metal::false_> {
         using type = parse_number_direct<state, token0, token1>;
     };
 
     template <class state, class tokenpair>
-    using parse_tokenpair = typename parse_tokenpair_impl<
+    using parse_tokenpair = typename _parse_tokenpair<
         state,
         metal::first<tokenpair>,
         metal::second<tokenpair>,

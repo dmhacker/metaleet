@@ -7,31 +7,31 @@ namespace metaleet {
 
 namespace detail279 {
     template <class n>
-    struct solve_impl {
+    struct _solve {
         // loop :: number -> number -> number
 
         template <class res, class idx, class guard = metal::greater<sqr<idx>, n>>
-        struct loop_impl {
-            using type = typename loop_impl<
-                metal::min<res, metal::inc<typename solve_impl<metal::sub<n, sqr<idx>>>::type>>,
+        struct _loop {
+            using type = typename _loop<
+                metal::min<res, metal::inc<typename _solve<metal::sub<n, sqr<idx>>>::type>>,
                 metal::inc<idx>>::type;
         };
 
         template <class res, class idx>
-        struct loop_impl<res, idx, metal::true_> {
+        struct _loop<res, idx, metal::true_> {
             using type = res;
         };
 
-        using type = typename loop_impl<metal::number<5>, ONE>::type;
+        using type = typename _loop<metal::number<5>, ONE>::type;
     };
 
     template <>
-    struct solve_impl<ONE> {
+    struct _solve<ONE> {
         using type = ONE;
     };
 
     template <>
-    struct solve_impl<ZERO> {
+    struct _solve<ZERO> {
         using type = ZERO;
     };
 }
@@ -39,7 +39,7 @@ namespace detail279 {
 // solve279 :: number -> number
 
 template <class n>
-using solve279 = typename detail279::solve_impl<n>::type;
+using solve279 = typename detail279::_solve<n>::type;
 
 }
 

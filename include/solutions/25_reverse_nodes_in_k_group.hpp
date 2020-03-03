@@ -7,89 +7,89 @@
 namespace metaleet {
 
 namespace detail25 {
-    // has_minimum_length :: llnode -> number -> bool
+    // has_minimum_length :: llnode<a> -> number -> bool
 
     template <class head, class k>
-    struct has_minimum_length_impl {
-        using type = typename has_minimum_length_impl<llnode_next<head>, metal::dec<k>>::type;
+    struct _has_minimum_length {
+        using type = typename _has_minimum_length<llnode_next<head>, metal::dec<k>>::type;
     };
 
     template <>
-    struct has_minimum_length_impl<llnode_end, ZERO> {
+    struct _has_minimum_length<llnode_end, ZERO> {
         using type = metal::true_;
     };
 
     template <class head>
-    struct has_minimum_length_impl<head, ZERO> {
+    struct _has_minimum_length<head, ZERO> {
         using type = metal::true_;
     };
 
     template <class k>
-    struct has_minimum_length_impl<llnode_end, k> {
+    struct _has_minimum_length<llnode_end, k> {
         using type = metal::false_;
     };
 
     template <class head, class k>
-    using has_minimum_length = typename has_minimum_length_impl<head, k>::type;
+    using has_minimum_length = typename _has_minimum_length<head, k>::type;
 
-    // kth_node :: llnode -> number -> llnode
+    // kth_node :: llnode<a> -> number -> llnode<a>
 
     template <class head, class k>
-    struct kth_node_impl {
-        using type = typename kth_node_impl<llnode_next<head>, metal::dec<k>>::type;
+    struct _kth_node {
+        using type = typename _kth_node<llnode_next<head>, metal::dec<k>>::type;
     };
 
     template <>
-    struct kth_node_impl<llnode_end, ZERO> {
+    struct _kth_node<llnode_end, ZERO> {
         using type = llnode_end;
     };
 
     template <class head>
-    struct kth_node_impl<head, ZERO> {
+    struct _kth_node<head, ZERO> {
         using type = head;
     };
 
     template <class k>
-    struct kth_node_impl<llnode_end, k> {
+    struct _kth_node<llnode_end, k> {
         using type = llnode_end;
     };
 
     template <class head, class k>
-    using kth_node = typename kth_node_impl<head, k>::type;
+    using kth_node = typename _kth_node<head, k>::type;
 
-    // reverse_to_kth :: llnode -> llnode -> number -> llnode
+    // reverse_to_kth :: llnode<a> -> llnode<a> -> number -> llnode<a>
 
     template <class accum, class head, class k>
-    struct reverse_to_kth_impl {
-        using type = typename reverse_to_kth_impl<llnode<llnode_data<head>, accum>, llnode_next<head>, metal::dec<k>>::type;
+    struct _reverse_to_kth {
+        using type = typename _reverse_to_kth<llnode<llnode_data<head>, accum>, llnode_next<head>, metal::dec<k>>::type;
     };
 
     template <class accum, class head>
-    struct reverse_to_kth_impl<accum, head, ZERO> {
+    struct _reverse_to_kth<accum, head, ZERO> {
         using type = accum;
     };
 
     template <class accum, class head, class k>
-    using reverse_to_kth = typename reverse_to_kth_impl<accum, head, k>::type;
+    using reverse_to_kth = typename _reverse_to_kth<accum, head, k>::type;
 
     template <class head, class k,
         class guard = has_minimum_length<head, k>>
-    struct solve_impl {
+    struct _solve {
         using type = reverse_to_kth<
-            typename solve_impl<kth_node<head, k>, k, has_minimum_length<kth_node<head, k>, k>>::type,
+            typename _solve<kth_node<head, k>, k, has_minimum_length<kth_node<head, k>, k>>::type,
             head, k>;
     };
 
     template <class head, class k>
-    struct solve_impl<head, k, metal::false_> {
+    struct _solve<head, k, metal::false_> {
         using type = head;
     };
 }
 
-// solve25 :: llnode -> number -> llnode
+// solve25 :: llnode<a> -> number -> llnode<a>
 
 template <class head, class k>
-using solve25 = typename detail25::solve_impl<head, k>::type;
+using solve25 = typename detail25::_solve<head, k>::type;
 
 }
 

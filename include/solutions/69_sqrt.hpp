@@ -14,28 +14,28 @@ namespace detail69 {
     // bsearch :: number -> number -> number -> number
 
     template <class n, class left, class right, class guard = metal::greater<left, right>>
-    struct bsearch_impl {
+    struct _bsearch {
         using type = ternary_switch<metal::div<n, average<left, right>>, average<left, right>,
-            typename bsearch_impl<n, metal::inc<average<left, right>>, right>::type,
+            typename _bsearch<n, metal::inc<average<left, right>>, right>::type,
             average<left, right>,
-            typename bsearch_impl<n, left, metal::dec<average<left, right>>>::type>;
+            typename _bsearch<n, left, metal::dec<average<left, right>>>::type>;
     };
 
     template <class n, class left, class right>
-    struct bsearch_impl<n, left, right, metal::true_> {
+    struct _bsearch<n, left, right, metal::true_> {
         using type = right;
     };
 
     template <class n, class left, class right>
-    using bsearch = typename bsearch_impl<n, left, right>::type;
+    using bsearch = typename _bsearch<n, left, right>::type;
 
     template <class n>
-    struct solve_impl {
+    struct _solve {
         using type = bsearch<n, ONE, metal::div<n, TWO>>;
     };
 
     template <>
-    struct solve_impl<ONE> {
+    struct _solve<ONE> {
         using type = ONE;
     };
 }
@@ -43,7 +43,7 @@ namespace detail69 {
 // solve69 :: number -> number
 
 template <class n>
-using solve69 = typename detail69::solve_impl<n>::type;
+using solve69 = typename detail69::_solve<n>::type;
 
 }
 
