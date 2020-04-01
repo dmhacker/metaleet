@@ -1,5 +1,6 @@
+#include <metaleet/solutions/968_binary_tree_cameras.hpp>
+
 #include <catch.hpp>
-#include <solutions/968_binary_tree_cameras.hpp>
 
 using namespace metaleet;
 

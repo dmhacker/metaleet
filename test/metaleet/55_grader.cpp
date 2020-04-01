@@ -1,5 +1,6 @@
+#include <metaleet/solutions/55_jump_game.hpp>
+
 #include <catch.hpp>
-#include <solutions/55_jump_game.hpp>
 
 using namespace metaleet;
 

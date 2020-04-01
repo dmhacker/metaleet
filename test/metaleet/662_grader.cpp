@@ -1,5 +1,6 @@
+#include <metaleet/solutions/662_maximum_width_of_binary_tree.hpp>
+
 #include <catch.hpp>
-#include <solutions/662_maximum_width_of_binary_tree.hpp>
 
 using namespace metaleet;
 

@@ -1,5 +1,6 @@
+#include <metaleet/solutions/69_sqrt.hpp>
+
 #include <catch.hpp>
-#include <solutions/69_sqrt.hpp>
 
 using namespace metaleet;
 

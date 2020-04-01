@@ -9,12 +9,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_compile_options("-ftemplate-depth=10000000")
 
-file(GLOB sources 
-    "src/*.cpp"
+file(GLOB_RECURSE sources 
+    "test/*.cpp"
 )
 
-add_executable(tests "src/main.cpp" ${sources})
-target_include_directories(tests PRIVATE "lib")
+add_executable(tests ${sources})
 target_include_directories(tests PRIVATE "include")
 
 include(CTest)

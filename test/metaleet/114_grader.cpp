@@ -1,5 +1,6 @@
+#include <metaleet/solutions/114_flatten_binary_tree_to_linked_list.hpp>
+
 #include <catch.hpp>
-#include <solutions/114_flatten_binary_tree_to_linked_list.hpp>
 
 using namespace metaleet;
 

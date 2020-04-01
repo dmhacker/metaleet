@@ -1,5 +1,6 @@
+#include <metaleet/solutions/121_buy_sell_stock.hpp>
+
 #include <catch.hpp>
-#include <solutions/121_buy_sell_stock.hpp>
 
 using namespace metaleet;
 

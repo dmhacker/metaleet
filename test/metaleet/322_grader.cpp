@@ -1,5 +1,6 @@
+#include <metaleet/solutions/322_coin_change.hpp>
+
 #include <catch.hpp>
-#include <solutions/322_coin_change.hpp>
 
 using namespace metaleet;
 

@@ -1,5 +1,6 @@
+#include <metaleet/solutions/21_merge_two_sorted_lists.hpp>
+
 #include <catch.hpp>
-#include <solutions/21_merge_two_sorted_lists.hpp>
 
 using namespace metaleet;
 

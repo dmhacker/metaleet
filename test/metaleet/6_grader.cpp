@@ -1,5 +1,6 @@
+#include <metaleet/solutions/6_zigzag_conversion.hpp>
+
 #include <catch.hpp>
-#include <solutions/6_zigzag_conversion.hpp>
 
 using namespace metaleet;
 

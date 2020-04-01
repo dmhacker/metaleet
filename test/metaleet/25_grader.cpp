@@ -1,5 +1,6 @@
+#include <metaleet/solutions/25_reverse_nodes_in_k_group.hpp>
+
 #include <catch.hpp>
-#include <solutions/25_reverse_nodes_in_k_group.hpp>
 
 using namespace metaleet;
 

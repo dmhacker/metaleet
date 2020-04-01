@@ -1,5 +1,6 @@
+#include <metaleet/solutions/279_perfect_squares.hpp>
+
 #include <catch.hpp>
-#include <solutions/279_perfect_squares.hpp>
 
 using namespace metaleet;
 

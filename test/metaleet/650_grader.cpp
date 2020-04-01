@@ -1,5 +1,6 @@
+#include <metaleet/solutions/650_two_keys_keyboard.hpp>
+
 #include <catch.hpp>
-#include <solutions/650_two_keys_keyboard.hpp>
 
 using namespace metaleet;
 
