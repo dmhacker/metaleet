@@ -14,7 +14,7 @@ at compile-time.
 The [metal](https://github.com/brunocodutra/metal) library is used to provide convenient containers like lists, maps, 
 and libraries, as well as operations on those containers and integral types.
 
-`constexpr`-based solutions are not allowed. This would defeat the
+`constexpr`-based solutions are not included. This would defeat the
 purpose of using only templates to achieve compile-time solutions; people could
 just copy-paste their existing C++ solutions into a `constexpr` function.
 

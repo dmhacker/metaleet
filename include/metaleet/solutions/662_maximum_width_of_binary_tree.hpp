@@ -1,8 +1,8 @@
 #ifndef METALEET_662_SOLUTION_HPP
 #define METALEET_662_SOLUTION_HPP
 
-#include <common/binary_tree.hpp>
-#include <common/unified.hpp>
+#include <metaleet/common/binary_tree.hpp>
+#include <metaleet/common/unified.hpp>
 
 namespace metaleet {
 

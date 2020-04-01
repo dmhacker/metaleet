@@ -1,7 +1,7 @@
 #ifndef METALEET_650_SOLUTION_HPP
 #define METALEET_650_SOLUTION_HPP
 
-#include <common/unified.hpp>
+#include <metaleet/common/unified.hpp>
 
 namespace metaleet {
 

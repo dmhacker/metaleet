@@ -1,8 +1,8 @@
 #ifndef METALEET_25_SOLUTION_HPP
 #define METALEET_25_SOLUTION_HPP
 
-#include <common/linked_list.hpp>
-#include <common/unified.hpp>
+#include <metaleet/common/linked_list.hpp>
+#include <metaleet/common/unified.hpp>
 
 namespace metaleet {
 
