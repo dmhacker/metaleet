@@ -1,7 +1,5 @@
 # metaleet 
 
-[![Build Status](https://travis-ci.com/dmhacker/metaleet.svg?branch=master)](https://travis-ci.com/dmhacker/metaleet)
-
 Yep, these Leetcode solutions *run in constant time!
 
 <sup>*but they don't necessarily compile in constant time.</sup>
